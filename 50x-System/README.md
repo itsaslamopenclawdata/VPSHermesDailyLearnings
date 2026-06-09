@@ -154,7 +154,7 @@ If the delta is < 10×, the patterns aren't being applied — debug by checking 
 
 - `WatchRepos-HermesDailyLearnings/Workflow01-10.md` — the 10 workflows that produce 50× the work
 - `WatchRepos-HermesDailyLearnings/DAILY-DIFF-PLAYBOOK.md` — how the watchlist updates daily
-- `default.md` / `default-setup.md` — the parent architecture
+- `quantum-venture-lab.md` / `quantum-venture-lab-setup.md` (in the HermesOracleVPS repo) — the parent architecture spec. These describe the *Quantum Venture Lab* as a system; the *install profile* for that system is `default`.
 
 ---
 
