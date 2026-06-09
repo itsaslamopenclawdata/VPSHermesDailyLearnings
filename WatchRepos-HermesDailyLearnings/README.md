@@ -1,46 +1,36 @@
 # WatchRepos — Hermes Daily Learnings
 
-> **One .md per Workflow, regenerated daily by the `watchrepos-daily-diff` cron.**
-> **Source:** All 18 watch repos (see "Watchlist" below).
-> **Updated:** See each workflow file's `Last updated` header.
+> **One patterns file, not 50 templates.** Read [`50x-QUICKSTART.md`](./50x-QUICKSTART.md) first.
+> **Source:** All 18 watch repos, re-distilled daily by the `distill.py` cron at 05:00.
+> **The 10 `Workflow0X-*.md` files and 18 `watchrepos-index/*.md` files are reference material** that the daily distiller uses; they are NOT what the agent reads at runtime. The agent reads exactly one file at runtime: [`50x-PATTERNS-LIBRARY.md`](./50x-PATTERNS-LIBRARY.md).
 
 ---
 
-## What is this folder?
+## The system in 30 seconds
 
-This folder is the **second brain** of the Hermes agent's watch-list system. Every day, the `watchrepos-daily-diff` cron:
+1. **18 watch repos** are the raw material (see "Watchlist" below)
+2. **`distill.py`** fetches them as tarballs (1 API call each), diffs against yesterday's state, and updates one file
+3. **[`50x-PATTERNS-LIBRARY.md`](./50x-PATTERNS-LIBRARY.md)** holds the 50 distilled patterns (P01–P50)
+4. **[`50x-AGENTS-MD-PATCH.md`](./50x-AGENTS-MD-PATCH.md)** is appended to your profile's `AGENTS.md` so the agent auto-loads patterns on every turn
+5. **[`50x-QUICKSTART.md`](./50x-QUICKSTART.md)** is the 6-command install + the loop diagram
 
-1. Fetches all 18 watch repos
-2. Detects what changed since the last run
-3. Updates the relevant **Workflow .md** below
-4. Commits + pushes
-5. Posts a summary to Telegram
-
-Each **Workflow** is a domain-spanning topic (not a 1:1 mapping to a repo). A workflow is synthesized from one or more watch repos that share a theme. This means a single change in a repo can affect multiple workflows.
+**Goal:** Make the agent 50× more productive by encoding your own watch repos into a measured, applied, self-improving pattern library.
 
 ---
 
-## The 10 Workflows
+## File map
 
-| # | Workflow | Primary source repos | What it teaches |
-|---|---|---|---|
-| 01 | [Quantum Venture Lab](./Workflow01-QuantumVentureLab.md) | `HermesOracleVPS` | Single-profile architecture for Quantum Tutor + Quantum Startup Studio |
-| 02 | [Twitter Research & Content](./Workflow02-TwitterResearchContent.md) | `TwitterResearcherMyHermesAgent`, `content-pipeline`, `Content-Generation-Collab`, `research-feed` | Multi-agent pipeline: research → pain-extract → validate → narrate → publish |
-| 03 | [Daily Intelligence & 10x Growth](./Workflow03-DailyIntelligence10x.md) | `AslamTheEliteLeader`, `MyDayWorking`, `Daily-Working-Space` | Personal-OS layer: 1-man business + 61 AI agents + $1B goal |
-| 04 | [Skill Bundles & Coding Standards](./Workflow04-SkillBundlesCodingStandards.md) | `CodingDeveloperRules`, `UltraPDFGenSkill`, `MyPaperclipOutputs` | Skill bundle primitive, race-condition spec, content amplification |
-| 05 | [PDF / Ebook Generation Pipeline](./Workflow05-PDFEbookPipeline.md) | `Ebook_EntireVibePipepline`, `UltraPDFGenSkill`, `MyPaperclipOutputs` | Topic → outline → content → polish → publish (Vibe PDF Platform pattern) |
-| 06 | [Multi-Agent Orchestration & CEO Directives](./Workflow06-MultiAgentOrchestration.md) | `company-orchestration`, `HermesOracleVPS` | CEO directives, agent org chart, Method 0 pricing, agency gBrain |
-| 07 | [Workflows Intelligence Layer](./Workflow07-WorkflowsIntelligenceLayer.md) | `MyWorkflowsIntelligenceLayer` | Upstream feed: YouTube channels → insights → routed to downstream workflows |
-| 08 | [Venture Evaluation](./Workflow08-VentureEvaluation.md) | `VentureHQ` | @VenturescoreBot, 100x productivity plans, 20-agent evaluation panel |
-| 09 | [Daily Hermes Researcher](./Workflow09-DailyHermesResearcher.md) | `MyHermesResearcher` | 20 daily prompts, 3 playbooks, learnings index, prompt quality loop |
-| 10 | [Quality Gate & Deployments](./Workflow10-QualityGateDeployments.md) | `quality-gate`, `deployments` | "Ready to ship" rubric, CI/CD pipeline, Coolify deploys, monitoring |
-
-Each Workflow .md has the same structure:
-1. **Purpose** — what this workflow is
-2. **Source repos and what they teach** — manifest + excerpts
-3. **Detailed TODO ACTION STEPS — Build the Harness** — the agent's playbook
-4. **Verification** — how to know it's working
-5. **Success criteria** — when to consider it done
+```
+WatchRepos-HermesDailyLearnings/
+├── README.md                       ← you are here
+├── 50x-QUICKSTART.md               ← the 6 commands + the loop diagram
+├── 50x-PATTERNS-LIBRARY.md         ← 50 patterns (P01–P50) — the runtime artifact
+├── 50x-AGENTS-MD-PATCH.md          ← runtime enforcement (append to AGENTS.md)
+├── distill.py                      ← daily cron script (re-distills on change)
+├── DAILY-DIFF-PLAYBOOK.md          ← how the daily diff loop works
+├── Workflow01-…Workflow10-…md      ← reference material (delete if you only want 50x)
+└── watchrepos-index/               ← per-repo excerpts (used by the distiller)
+```
 
 ---
 
@@ -71,36 +61,14 @@ Each Workflow .md has the same structure:
 
 ## How this folder is updated
 
-| Trigger | What happens | Cron / command |
+| Trigger | What happens | Command |
 |---|---|---|
-| First run (today) | Full ingestion: clone all 18, sample 39 files, generate 10 workflows, commit + push | `python3 /tmp/generate_workflows.py` (one-time) |
-| Daily 05:00 | Diff detection: fetch all 18, find changes since last run, update relevant workflows | `watchrepos-daily-diff` cron |
-| Manual | "Run the daily diff now" | `hermes cron run watchrepos-daily-diff` |
+| Daily 05:00 | Fetch all 18 tarballs, diff, detect pattern changes, re-push | `python3 distill.py` (run by cron) |
+| Weekly Sunday 20:00 | Prune dead patterns, promote emerging ones, log metrics | `fifty-x-self-improve` cron |
+| Manual | "Run the daily distill now" | `python3 /opt/data/watchrepo-harness/distill.py` |
 
-See [`DAILY-DIFF-PLAYBOOK.md`](./DAILY-DIFF-PLAYBOOK.md) for the full operational spec.
-
----
-
-## File map
-
-```
-WatchRepos-HermesDailyLearnings/
-├── README.md                              ← you are here
-├── DAILY-DIFF-PLAYBOOK.md                 ← how to run the daily diff
-├── Workflow01-QuantumVentureLab.md
-├── Workflow02-TwitterResearchContent.md
-├── Workflow03-DailyIntelligence10x.md
-├── Workflow04-SkillBundlesCodingStandards.md
-├── Workflow05-PDFEbookPipeline.md
-├── Workflow06-MultiAgentOrchestration.md
-├── Workflow07-WorkflowsIntelligenceLayer.md
-├── Workflow08-VentureEvaluation.md
-├── Workflow09-DailyHermesResearcher.md
-└── Workflow10-QualityGateDeployments.md
-```
+See [`50x-QUICKSTART.md`](./50x-QUICKSTART.md) for the full install + loop diagram.
 
 ---
 
-**Last updated:** 2026-06-03 (first pass — full ingestion)
-**Next scheduled run:** 2026-06-04 05:00 (daily diff cron)
-**Owner:** Aslam Shaik · **Maintained by:** `watchrepos-daily-diff` cron
+**Owner:** Aslam Shaik · **Maintained by:** `watchrepos-daily-diff` cron (daily) + `fifty-x-self-improve` cron (weekly)
