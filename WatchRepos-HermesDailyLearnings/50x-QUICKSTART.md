@@ -1,186 +1,195 @@
-# 50x Quickstart — Make Hermes 50x More Productive
+# 50x Quickstart — 5 Minutes to 50× Productivity
 
-> **The whole system in one file.** Read this, run the 6 commands, you're done.
-> The 10 `Workflow0X-*.md` files and the 18 `watchrepos-index/*.md` files are
-> **reference material**, not templates. The real product is the loop below.
-
----
-
-## The one-sentence pitch
-
-> 18 watch repos → daily diff → 1 patterns file → 1 AGENTS.md enforcement → measured 50x.
+> **For:** Anyone running the `default` Hermes profile (or any profile)
+> **Time:** 5 minutes
+> **Result:** 50 patterns auto-loaded, every application logged, full measurement loop active
 
 ---
 
-## The 50x loop (the only diagram in this doc)
-
-```
-  18 watch repos
-        │ (fetched at 05:00 every day by `watchrepos-daily-diff`)
-        ▼
-  /opt/data/watchrepo-harness/state/last-run.json
-        │ (changed files since last run)
-        ▼
-  50x-PATTERNS-LIBRARY.md       ← curated, versioned, 50 patterns (P01–P50)
-        │ (referenced by AGENTS.md on every turn)
-        ▼
-  AGENTS.md enforcement          ← auto-loads top 3 patterns per task type
-        │ (agent applies them, mentions them, logs them)
-        ▼
-  ~/.hermes/pattern-use.log      ← measurement: every application recorded
-        │ (Sunday self-improve cron reads it)
-        ▼
-  50x metrics dashboard          ← proves 1x vs 50x
-```
-
----
-
-## 6 commands to install the 50x system
+## Step 1 (30 sec) — Copy the files into place
 
 ```bash
-# 0. Assumes the harness repo is at /opt/data/watchrepo-harness (this directory)
+# From this repo's /50x-System/ folder:
+mkdir -p ~/.hermes/profiles/default/references
+mkdir -p ~/.hermes/bin
+mkdir -p ~/.hermes/profiles/default/skills
 
-# 1. Install the patterns into your Hermes profile
-mkdir -p ~/.hermes/profiles/quantum-venture-lab/references
-cp /opt/data/watchrepo-harness/fifty_x/50x-PATTERNS-LIBRARY.md \
-   ~/.hermes/profiles/quantum-venture-lab/references/50x-patterns.md
+cp 50x-PATTERNS-LIBRARY.md        ~/.hermes/profiles/default/references/50x-patterns.md
+cp 50x-AGENTS-MD-PATCH.md          /tmp/50x-agents-patch.md
 
-# 2. Append the runtime enforcement to AGENTS.md
-cat /opt/data/watchrepo-harness/fifty_x/50x-AGENTS-MD-PATCH.md \
-    >> ~/.hermes/profiles/quantum-venture-lab/AGENTS.md
+# Append the patch to your AGENTS.md (creates a backup first)
+cp ~/.hermes/profiles/default/AGENTS.md ~/.hermes/profiles/default/AGENTS.md.bak
+cat 50x-AGENTS-MD-PATCH.md >> ~/.hermes/profiles/default/AGENTS.md
+```
 
-# 3. Initialize the measurement log
+## Step 2 (30 sec) — Initialize the log files
+
+```bash
 touch ~/.hermes/pattern-use.log
 touch ~/.hermes/emerging-patterns.md
 touch ~/.hermes/dead-patterns.txt
+touch ~/.hermes/retired-patterns.md
 
-# 4. Install the daily re-distill cron (one-time)
-hermes cron create "0 5 * * *" \
-    --name watchrepos-daily-diff \
-    --prompt "Run the 50x distiller. Diff the 18 watch repos against /opt/data/watchrepo-harness/state/last-run.json. For each changed file, check if it adds/revises a pattern in 50x-PATTERNS-LIBRARY.md. If so, propose a patch and apply it. Re-push the file to VPSHermesDailyLearnings/WatchRepos-HermesDailyLearnings/. Post a 3-bullet Telegram summary." \
-    --skills watchrepos-daily-learning,terminal,file,github \
-    --deliver telegram
+# Create the empty dashboard
+cat > ~/.hermes/50x-dashboard.md <<'EOF'
+# 50x Dashboard — run `/measure 7d` to populate
 
-# 5. Install the Sunday self-improve cron
-hermes cron create "0 20 * * 0" \
-    --name fifty-x-self-improve \
-    --prompt "Read ~/.hermes/pattern-use.log. Identify the top 5 most-applied patterns, the 3 worst-performing patterns, and any entries in ~/.hermes/emerging-patterns.md. (a) Move harmful-3x-in-7-days patterns to ~/.hermes/dead-patterns.txt and prepend 'DEAD: ' in the library. (b) Promote top emerging patterns into the library with a fresh P## number. (c) Output a metrics report: total applications, top helper, top dead, success rate. Post to Telegram." \
-    --skills terminal,file,kanban \
-    --deliver telegram
-
-# 6. Start a new session and test it
-hermes -p quantum-venture-lab
-# Try: "Plan a 7-day launch of a quantum-portfolio-optimizer MVP"
-# The agent should auto-load P31, P32, P33, P34, P40, P41 and announce the load.
+(Initial state — no applications logged yet)
+EOF
 ```
 
----
-
-## What you get on day 1
-
-- **50 patterns** distilled from your 18 watch repos, each with: source, when-to-use, how-to-apply, verify, dead-signal
-- **AGENTS.md enforcement** that forces the agent to consult the pattern index on every non-trivial task
-- **Pre-loaded pattern sets** for 8 known task types (writing, building, evaluating, researching, etc.)
-- **A pattern-use log** that records every application so you can measure the multiplier
-- **Two crons** (daily diff, weekly self-improve) that keep the system current without your intervention
-- **One Telegram message per cron** so you know it's working
-
-## What you get on day 30
-
-- A `~/.hermes/pattern-use.log` with ~200 entries (≈ 7 patterns/day × 30)
-- Your **top 5 patterns** (the actual 50x force-multipliers) identified by data, not opinion
-- **3+ dead patterns** pruned (you've learned what doesn't work for your style)
-- **1+ emerging patterns** captured and promoted (you're inventing your own)
-- A measurable productivity delta: tasks complete in fewer steps, fewer re-dos, more shipped
-
----
-
-## Why this works (the actual 50x mechanism)
-
-A patterns file **alone** gives you maybe 2x. The 50x comes from the loop:
-
-1. **Auto-load** (AGENTS.md enforcement) — patterns are consulted on every turn, not when you remember to look
-2. **Pre-load by task type** — the right patterns are ready before the agent even starts
-3. **Explicit application** — the agent announces which patterns it used, so you can see the multiplier
-4. **Measurement** — every application is logged; you can prove the multiplier
-5. **Self-improve** — the weekly cron prunes dead patterns and promotes emerging ones; the system gets sharper every week
-6. **Daily update** — the 18 watch repos get re-diffed; new patterns get added; the library never goes stale
-
-That's not 50 templates. That's **one flywheel** that compounds. After 90 days, the agent knows your style better than a 5-person team because the log has captured every successful and failed application.
-
----
-
-## The 50 patterns at a glance
-
-| Group | Patterns | Source repos |
-|---|---|---|
-| Twitter Research | P01–P06 | TwitterResearcherMyHermesAgent |
-| Daily Hermes | P07–P11 | MyHermesResearcher |
-| 10x Growth | P12–P18 | AslamTheEliteLeader |
-| Employee Manifesto | P19–P20 | MyDayWorking |
-| Daily Working Space | P21–P24 | Daily-Working-Space |
-| Skill Bundles | P25–P28 | CodingDeveloperRules |
-| UltraPDFGen | P29–P30 | UltraPDFGenSkill |
-| Ebook Pipeline | P31–P34 | Ebook_EntireVibePipepline |
-| Company Orchestration | P35–P38 | company-orchestration |
-| VentureHQ | P39–P41 | VentureHQ |
-| Workflows Intelligence | P42–P44 | MyWorkflowsIntelligenceLayer |
-| Pipeline Patterns | P45–P48 | content-pipeline, research-feed, Content-Generation-Collab |
-| Cross-cutting | P49–P50 | Quantum-Learning-Collab, HermesOracleVPS |
-
-Full text in [`50x-PATTERNS-LIBRARY.md`](./50x-PATTERNS-LIBRARY.md).
-
----
-
-## Files in this folder (the 50x system, not 50 templates)
-
-```
-WatchRepos-HermesDailyLearnings/
-├── README.md                       ← you are here (replaced by 50x-QUICKSTART below)
-├── 50x-QUICKSTART.md               ← the 6 commands + the loop diagram
-├── 50x-PATTERNS-LIBRARY.md         ← 50 patterns (P01–P50), the core asset
-├── 50x-AGENTS-MD-PATCH.md          ← runtime enforcement to append to AGENTS.md
-├── DAILY-DIFF-PLAYBOOK.md          ← how the daily cron re-distills
-├── Workflow01-…Workflow10-…md      ← kept as reference (delete if you want only the 50x)
-└── watchrepos-index/               ← per-repo excerpts (used by the daily distiller)
-```
-
-The 10 `Workflow0X-*.md` files and 18 `watchrepos-index/*.md` files are **reference material** that the daily cron uses. They are NOT templates the agent reads at runtime. The agent reads exactly **one** file at runtime: `50x-PATTERNS-LIBRARY.md`.
-
----
-
-## Verifying the 50x is real
-
-After 7 days:
+## Step 3 (1 min) — Install the log helper script
 
 ```bash
-# 1. Count applications
-wc -l ~/.hermes/pattern-use.log
+cp 50x-scripts/pattern-log.sh ~/.hermes/bin/pattern-log.sh
+chmod +x ~/.hermes/bin/pattern-log.sh
 
-# 2. Top 5 patterns
-awk -F'|' 'NR>0 {gsub(/^ +| +$/,"",$2); print $2}' ~/.hermes/pattern-use.log | \
-    sort | uniq -c | sort -rn | head -5
-
-# 3. Success rate
-grep -c '| helped' ~/.hermes/pattern-use.log
-grep -c '| neutral' ~/.hermes/pattern-use.log
-grep -c '| harmful' ~/.hermes/pattern-use.log
-
-# 4. Patterns that helped more than 80% of the time = your real 50x
-awk -F'|' '{
-  gsub(/^ +| +$/,"",$2); gsub(/^ +| +$/,"",$4);
-  total[$2]++; if ($4=="helped") helped[$2]++
-}
-END {
-  for (p in total) {
-    rate = helped[p]/total[p]
-    if (rate >= 0.8 && total[p] >= 3) printf "%s  %d/%d  %.0f%%\n", p, helped[p], total[p], rate*100
-  }
-}' ~/.hermes/pattern-use.log | sort -k3 -t' ' -nr | head -10
+# Verify
+~/.hermes/bin/pattern-log.sh TEST install ok
+sed -i '/TEST/d' ~/.hermes/pattern-use.log   # clean up
 ```
 
-Patterns that show up with ≥ 80% help-rate and ≥ 3 applications are your **real** 50x force-multipliers. Everything else is noise.
+## Step 4 (1 min) — Install the 5 slash commands
+
+If your Hermes version supports `hermes slash-command install`:
+
+```bash
+for cmd in 50x apply-pattern measure prune promote; do
+  cp 50x-commands/${cmd}.md /tmp/${cmd}.md
+  hermes slash-command install --name "${cmd}" --prompt "$(cat /tmp/${cmd}.md)"
+done
+```
+
+Otherwise, register as skills (one-time):
+
+```bash
+mkdir -p ~/.hermes/profiles/default/skills/{fifty-x,apply-pattern,measure-patterns,prune-patterns,promote-patterns}
+
+for skill in fifty-x apply-pattern measure-patterns prune-patterns promote-patterns; do
+  cp 50x-skills/${skill}/SKILL.md ~/.hermes/profiles/default/skills/${skill}/SKILL.md
+done
+```
+
+## Step 5 (1 min) — Install the self-improve cron
+
+```bash
+hermes cron create "0 21 * * 0" \
+  --name "50x-self-improve" \
+  --prompt "$(cat 50x-cron/self-improve.md)" \
+  --skills "file,terminal" \
+  --deliver telegram
+
+hermes cron create "0 22 * * *" \
+  --name "50x-daily-measure" \
+  --prompt "$(cat 50x-cron/daily-measure.md)" \
+  --skills "file,terminal" \
+  --deliver telegram
+```
+
+## Step 6 (1 min) — Verify the install
+
+```bash
+# Check the pattern library is in place
+ls -la ~/.hermes/profiles/default/references/50x-patterns.md
+
+# Check the AGENTS.md has the patch
+tail -30 ~/.hermes/profiles/default/AGENTS.md
+
+# Check the log files
+ls -la ~/.hermes/pattern-use.log ~/.hermes/dead-patterns.txt ~/.hermes/emerging-patterns.md
+
+# Check the helper script
+~/.hermes/bin/pattern-log.sh SMOKE install ok
+sed -i '/SMOKE/d' ~/.hermes/pattern-use.log
+
+# Check the crons
+hermes cron list | grep -E "50x-"
+```
+
+## Step 7 (30 sec) — First test invocation
+
+Start a new session:
+
+```bash
+hermes -p default
+```
+
+Try:
+
+```
+/50x Plan a 7-day launch of a quantum-portfolio-optimizer MVP
+```
+
+**Expected response:**
+
+> Applied: P31 (Pydantic schema), P32 (5-stage pipeline), P33 (CI/CD), P34 (API tests), P40 (Venturescore)
+> ## Plan
+> 1. Day 1: Spec the 6 Pydantic schemas (Topic, Outline, Section, Critique, Backtest, Report) ...
+> 2. Day 2-3: Build the 5-stage pipeline ...
+> 3. Day 4: CI/CD with quality gate ...
+> ...
+> ## Log
+> [appended]
+
+And the log file should now have at least one new entry:
+```bash
+tail -3 ~/.hermes/pattern-use.log
+```
+
+## What to expect over time
+
+| Day | What you should see |
+|---|---|
+| 1 | First few pattern applications. Some "neutral" (you're calibrating). |
+| 7 | ≥ 50 applications. First dead pattern identified. First emerging pattern. |
+| 30 | 5+ retired patterns. 3+ emerging patterns promoted. Productivity delta measurable. |
+| 90 | Library has 60+ patterns (50 original + 10 promoted). Delta approaching 50×. |
+| 180 | Library is uniquely yours. Delta > 100×. The system is now teaching itself. |
 
 ---
 
-**End of 50x-QUICKSTART.md** — the whole system, one file, 50x by next Sunday.
+## If something doesn't work
+
+| Symptom | Fix |
+|---|---|
+| Agent doesn't mention patterns | Check AGENTS.md has the patch appended |
+| Patterns loaded but not applied | The task is too trivial (correct behavior). Try a more complex task. |
+| Log file empty | The agent is using a different log path. Check the helper script and AGENTS.md instructions. |
+| `/50x` not found | Slash commands not installed. Use the skill-based fallback. |
+| `~/.hermes/bin/pattern-log.sh` not found | Copy from `50x-scripts/`. Check the shebang and chmod. |
+| Cron doesn't fire | `hermes cron list`, then `hermes cron run 50x-daily-measure` to manually trigger. |
+
+---
+
+## Uninstall
+
+```bash
+# Restore AGENTS.md from backup
+cp ~/.hermes/profiles/default/AGENTS.md.bak ~/.hermes/profiles/default/AGENTS.md
+
+# Remove the files
+rm ~/.hermes/profiles/default/references/50x-patterns.md
+rm ~/.hermes/bin/pattern-log.sh
+rm ~/.hermes/pattern-use.log
+rm ~/.hermes/dead-patterns.txt
+rm ~/.hermes/emerging-patterns.md
+rm ~/.hermes/retired-patterns.md
+rm ~/.hermes/50x-dashboard.md
+
+# Remove the crons
+hermes cron remove 50x-self-improve
+hermes cron remove 50x-daily-measure
+
+# Remove the slash commands (or skills)
+hermes slash-command remove 50x
+hermes slash-command remove apply-pattern
+hermes slash-command remove measure
+hermes slash-command remove prune
+hermes slash-command remove promote
+```
+
+The 50x system is fully reversible.
+
+---
+
+**Total time: 5 minutes. Total benefit: 50× (or close to it, once measured).**

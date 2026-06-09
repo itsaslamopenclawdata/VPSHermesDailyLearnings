@@ -105,14 +105,14 @@ Read ~/.hermes/emerging-patterns.md. For each entry, check ~/.hermes/pattern-use
 For each retirement candidate:
 1. Append the full pattern block to ~/.hermes/retired-patterns.md with the date and a 1-line reason
 2. Add to ~/.hermes/dead-patterns.txt: \`P## YYYY-MM-DD <reason>\`
-3. Edit ~/.hermes/profiles/quantum-venture-lab/AGENTS.md to remove the pattern from the pre-load table
+3. Edit ~/.hermes/profiles/default/AGENTS.md to remove the pattern from the pre-load table
 4. Log to ~/.hermes/pattern-use.log: \`<TS> | RETIRED | P## | <reason>\`
 
 ## Step 5: Promote emerging patterns
 For each promotion candidate:
 1. Validate the 7 fields: name, source, when, what, how, verify, dead-signal. If any missing, abort and list missing fields.
 2. Determine the next P## number (look at the highest existing number in 50x-patterns.md, add 1).
-3. Append the new pattern to ~/.hermes/profiles/quantum-venture-lab/references/50x-patterns.md in the appropriate group section (or create a new 'Cross-cutting' entry).
+3. Append the new pattern to ~/.hermes/profiles/default/references/50x-patterns.md in the appropriate group section (or create a new 'Cross-cutting' entry).
 4. Update the index table at the top of 50x-patterns.md.
 5. Edit AGENTS.md to add the new pattern to the pre-load table (or as a new row if the task type is novel).
 6. Remove the entry from ~/.hermes/emerging-patterns.md.
@@ -199,7 +199,7 @@ If the loop corrupts the library:
 
 ```bash
 # 1. Restore from this upstream repo
-cp 50x-PATTERNS-LIBRARY.md ~/.hermes/profiles/quantum-venture-lab/references/50x-patterns.md
+cp 50x-PATTERNS-LIBRARY.md ~/.hermes/profiles/default/references/50x-patterns.md
 
 # 2. Restore AGENTS.md from your last good state
 # (always commit AGENTS.md to git so you can revert)

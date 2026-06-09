@@ -11,7 +11,7 @@ This script:
 1. Finds the pattern in ~/.hermes/emerging-patterns.md
 2. Validates the 7 required fields
 3. Assigns the next P## number
-4. Appends to ~/.hermes/profiles/quantum-venture-lab/references/50x-patterns.md
+4. Appends to ~/.hermes/profiles/default/references/50x-patterns.md
 5. Removes from emerging-patterns.md
 6. Logs the promotion
 

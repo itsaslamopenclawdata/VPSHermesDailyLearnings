@@ -234,10 +234,10 @@ hermes slash-command list | grep -E "50x|apply-pattern|measure|prune|promote"
 If slash commands aren't supported, register each as a skill:
 
 ```bash
-mkdir -p ~/.hermes/profiles/quantum-venture-lab/skills/{fifty-x,apply-pattern,measure-patterns,prune-patterns,promote-patterns}
+mkdir -p ~/.hermes/profiles/default/skills/{fifty-x,apply-pattern,measure-patterns,prune-patterns,promote-patterns}
 
 # /50x → fifty-x skill
-cat > ~/.hermes/profiles/quantum-venture-lab/skills/fifty-x/SKILL.md <<'EOF'
+cat > ~/.hermes/profiles/default/skills/fifty-x/SKILL.md <<'EOF'
 ---
 name: fifty-x
 description: "Apply 50x patterns to any task. Trigger: /50x <task>"

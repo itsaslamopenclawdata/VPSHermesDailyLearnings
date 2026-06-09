@@ -154,7 +154,7 @@ If the delta is < 10×, the patterns aren't being applied — debug by checking 
 
 - `WatchRepos-HermesDailyLearnings/Workflow01-10.md` — the 10 workflows that produce 50× the work
 - `WatchRepos-HermesDailyLearnings/DAILY-DIFF-PLAYBOOK.md` — how the watchlist updates daily
-- `quantum-venture-lab.md` / `quantum-venture-lab-setup.md` — the parent architecture
+- `default.md` / `default-setup.md` — the parent architecture
 
 ---
 

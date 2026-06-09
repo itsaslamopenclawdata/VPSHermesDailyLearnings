@@ -1,7 +1,7 @@
 # AGENTS.md Patch — Force 50x Pattern Loading
 
-> **What this is:** The exact text to add to your existing `~/.hermes/profiles/quantum-venture-lab/AGENTS.md` (or any other profile) so that the agent **auto-loads and applies the 50x patterns** on every turn.
-> **How to install:** `cat 50x-AGENTS-MD-PATCH.md >> ~/.hermes/profiles/quantum-venture-lab/AGENTS.md`
+> **What this is:** The exact text to add to your existing `~/.hermes/profiles/default/AGENTS.md` (or any other profile) so that the agent **auto-loads and applies the 50x patterns** on every turn.
+> **How to install:** `cat 50x-AGENTS-MD-PATCH.md >> ~/.hermes/profiles/default/AGENTS.md`
 > **Reversible:** Delete the section if you don't want it.
 
 ---
@@ -113,11 +113,11 @@ This converts the patterns from "nice to have" to **operational primitives that 
 
 ```bash
 # 1. Download the pattern library to your profile
-mkdir -p ~/.hermes/profiles/quantum-venture-lab/references
-cp 50x-PATTERNS-LIBRARY.md ~/.hermes/profiles/quantum-venture-lab/references/50x-patterns.md
+mkdir -p ~/.hermes/profiles/default/references
+cp 50x-PATTERNS-LIBRARY.md ~/.hermes/profiles/default/references/50x-patterns.md
 
 # 2. Append the patch to your AGENTS.md
-cat 50x-AGENTS-MD-PATCH.md >> ~/.hermes/profiles/quantum-venture-lab/AGENTS.md
+cat 50x-AGENTS-MD-PATCH.md >> ~/.hermes/profiles/default/AGENTS.md
 
 # 3. Initialize the log files
 touch ~/.hermes/pattern-use.log
@@ -125,11 +125,11 @@ touch ~/.hermes/emerging-patterns.md
 touch ~/.hermes/dead-patterns.txt
 
 # 4. (Optional) Verify the install
-ls -la ~/.hermes/pattern-use.log ~/.hermes/profiles/quantum-venture-lab/references/50x-patterns.md
+ls -la ~/.hermes/pattern-use.log ~/.hermes/profiles/default/references/50x-patterns.md
 wc -l ~/.hermes/pattern-use.log
 
 # 5. Start a new session
-hermes -p quantum-venture-lab
+hermes -p default
 # Try: "Plan a 7-day launch of a quantum-portfolio-optimizer MVP"
 # The agent should auto-load P31, P32, P33, P34, P40, P41 and log the application
 ```

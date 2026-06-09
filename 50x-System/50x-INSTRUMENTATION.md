@@ -151,7 +151,7 @@ Generate this with `/measure 7d`:
 - Log file: ~/.hermes/pattern-use.log (47 lines)
 - Retired: ~/.hermes/dead-patterns.txt (1 entry)
 - Emerging: ~/.hermes/emerging-patterns.md (2 entries)
-- Pattern library: ~/.hermes/profiles/quantum-venture-lab/references/50x-patterns.md (50 patterns)
+- Pattern library: ~/.hermes/profiles/default/references/50x-patterns.md (50 patterns)
 ```
 
 ---

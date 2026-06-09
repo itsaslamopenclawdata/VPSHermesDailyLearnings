@@ -6,8 +6,8 @@
 set -euo pipefail
 
 EMERGING="$HOME/.hermes/emerging-patterns.md"
-PATTERNS_LIB="${PATTERNS_LIB:-$HOME/.hermes/profiles/quantum-venture-lab/references/50x-patterns.md}"
-AGENTS_MD="$HOME/.hermes/profiles/quantum-venture-lab/AGENTS.md"
+PATTERNS_LIB="${PATTERNS_LIB:-$HOME/.hermes/profiles/default/references/50x-patterns.md}"
+AGENTS_MD="$HOME/.hermes/profiles/default/AGENTS.md"
 LOG="$HOME/.hermes/pattern-use.log"
 
 NAME="${1:?Usage: 50x-promote.sh <emerging-pattern-name>}"

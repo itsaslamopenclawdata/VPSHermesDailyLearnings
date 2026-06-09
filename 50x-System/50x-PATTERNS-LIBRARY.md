@@ -721,7 +721,7 @@ Verify: 100% of canonical-source questions cite the source
 Dead signal: Agent answers without citing (refuse the response)
 
 ### P50 — Single-profile, two-workflow architecture
-Source: `HermesOracleVPS/quantum-venture-lab.md`
+Source: `HermesOracleVPS/quantum-venture-lab.md` (architecture spec in the HermesOracleVPS repo)
 When: User has 2+ synergistic workflows (e.g. learn + build)
 What: A single Hermes profile that hosts multiple workflows via slash commands, skills, and selective subagents. NOT multiple profiles (loses synergy).
 How:

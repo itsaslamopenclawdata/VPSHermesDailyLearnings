@@ -9,7 +9,7 @@ LOG="$HOME/.hermes/pattern-use.log"
 DEAD="$HOME/.hermes/dead-patterns.txt"
 EMERGING="$HOME/.hermes/emerging-patterns.md"
 RETIRED="$HOME/.hermes/retired-patterns.md"
-PATTERNS_LIB="${PATTERNS_LIB:-$HOME/.hermes/profiles/quantum-venture-lab/references/50x-patterns.md}"
+PATTERNS_LIB="${PATTERNS_LIB:-$HOME/.hermes/profiles/default/references/50x-patterns.md}"
 
 PERIOD="${1:-7d}"
 case "$PERIOD" in

@@ -3,7 +3,7 @@
 The user invoked /apply-pattern with: P## <task>
 
 ## Step 1: Load the pattern
-Read the P## entry in ~/.hermes/profiles/quantum-venture-lab/references/50x-patterns.md. Extract:
+Read the P## entry in ~/.hermes/profiles/default/references/50x-patterns.md. Extract:
 - When (trigger condition)
 - What (description)
 - How (the recipe)

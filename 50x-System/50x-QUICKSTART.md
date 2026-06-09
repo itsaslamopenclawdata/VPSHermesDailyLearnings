@@ -1,6 +1,6 @@
 # 50x Quickstart — 5 Minutes to 50× Productivity
 
-> **For:** Anyone running the `quantum-venture-lab` Hermes profile (or any profile)
+> **For:** Anyone running the `default` Hermes profile (or any profile)
 > **Time:** 5 minutes
 > **Result:** 50 patterns auto-loaded, every application logged, full measurement loop active
 
@@ -10,16 +10,16 @@
 
 ```bash
 # From this repo's /50x-System/ folder:
-mkdir -p ~/.hermes/profiles/quantum-venture-lab/references
+mkdir -p ~/.hermes/profiles/default/references
 mkdir -p ~/.hermes/bin
-mkdir -p ~/.hermes/profiles/quantum-venture-lab/skills
+mkdir -p ~/.hermes/profiles/default/skills
 
-cp 50x-PATTERNS-LIBRARY.md        ~/.hermes/profiles/quantum-venture-lab/references/50x-patterns.md
+cp 50x-PATTERNS-LIBRARY.md        ~/.hermes/profiles/default/references/50x-patterns.md
 cp 50x-AGENTS-MD-PATCH.md          /tmp/50x-agents-patch.md
 
 # Append the patch to your AGENTS.md (creates a backup first)
-cp ~/.hermes/profiles/quantum-venture-lab/AGENTS.md ~/.hermes/profiles/quantum-venture-lab/AGENTS.md.bak
-cat 50x-AGENTS-MD-PATCH.md >> ~/.hermes/profiles/quantum-venture-lab/AGENTS.md
+cp ~/.hermes/profiles/default/AGENTS.md ~/.hermes/profiles/default/AGENTS.md.bak
+cat 50x-AGENTS-MD-PATCH.md >> ~/.hermes/profiles/default/AGENTS.md
 ```
 
 ## Step 2 (30 sec) — Initialize the log files
@@ -63,10 +63,10 @@ done
 Otherwise, register as skills (one-time):
 
 ```bash
-mkdir -p ~/.hermes/profiles/quantum-venture-lab/skills/{fifty-x,apply-pattern,measure-patterns,prune-patterns,promote-patterns}
+mkdir -p ~/.hermes/profiles/default/skills/{fifty-x,apply-pattern,measure-patterns,prune-patterns,promote-patterns}
 
 for skill in fifty-x apply-pattern measure-patterns prune-patterns promote-patterns; do
-  cp 50x-skills/${skill}/SKILL.md ~/.hermes/profiles/quantum-venture-lab/skills/${skill}/SKILL.md
+  cp 50x-skills/${skill}/SKILL.md ~/.hermes/profiles/default/skills/${skill}/SKILL.md
 done
 ```
 
@@ -90,10 +90,10 @@ hermes cron create "0 22 * * *" \
 
 ```bash
 # Check the pattern library is in place
-ls -la ~/.hermes/profiles/quantum-venture-lab/references/50x-patterns.md
+ls -la ~/.hermes/profiles/default/references/50x-patterns.md
 
 # Check the AGENTS.md has the patch
-tail -30 ~/.hermes/profiles/quantum-venture-lab/AGENTS.md
+tail -30 ~/.hermes/profiles/default/AGENTS.md
 
 # Check the log files
 ls -la ~/.hermes/pattern-use.log ~/.hermes/dead-patterns.txt ~/.hermes/emerging-patterns.md
@@ -111,7 +111,7 @@ hermes cron list | grep -E "50x-"
 Start a new session:
 
 ```bash
-hermes -p quantum-venture-lab
+hermes -p default
 ```
 
 Try:
@@ -165,10 +165,10 @@ tail -3 ~/.hermes/pattern-use.log
 
 ```bash
 # Restore AGENTS.md from backup
-cp ~/.hermes/profiles/quantum-venture-lab/AGENTS.md.bak ~/.hermes/profiles/quantum-venture-lab/AGENTS.md
+cp ~/.hermes/profiles/default/AGENTS.md.bak ~/.hermes/profiles/default/AGENTS.md
 
 # Remove the files
-rm ~/.hermes/profiles/quantum-venture-lab/references/50x-patterns.md
+rm ~/.hermes/profiles/default/references/50x-patterns.md
 rm ~/.hermes/bin/pattern-log.sh
 rm ~/.hermes/pattern-use.log
 rm ~/.hermes/dead-patterns.txt

@@ -7,8 +7,8 @@ set -euo pipefail
 LOG="$HOME/.hermes/pattern-use.log"
 DEAD="$HOME/.hermes/dead-patterns.txt"
 RETIRED="$HOME/.hermes/retired-patterns.md"
-PATTERNS_LIB="${PATTERNS_LIB:-$HOME/.hermes/profiles/quantum-venture-lab/references/50x-patterns.md}"
-AGENTS_MD="$HOME/.hermes/profiles/quantum-venture-lab/AGENTS.md"
+PATTERNS_LIB="${PATTERNS_LIB:-$HOME/.hermes/profiles/default/references/50x-patterns.md}"
+AGENTS_MD="$HOME/.hermes/profiles/default/AGENTS.md"
 DRY_RUN=false
 WINDOW="7 days ago"
 
